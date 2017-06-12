@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const cors = require('cors');
 
 // Environment Config /////////////////////////////////////////
 require('dotenv').config({ path: './config.dev.env' });
@@ -17,6 +18,7 @@ mongoose.connection.on('error', (err) => {
 // App Config /////////////////////////////////////////////////
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 // additional logging in dev environment
 if (process.env.ENV === 'dev') { 
   app.use(morgan("combined")); 
