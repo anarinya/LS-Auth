@@ -17,7 +17,15 @@ const getUsers = (req, res) => {
     .catch(err => console.error(err));
 };
 
+const getUserByName = (req, res) => {
+  User.find({ username: req.params.username })
+    .then(user => res.send(user))
+    .catch(err => console.error(err));
+};
+
 module.exports = (app) => {
   app.get('/users', requireAuth, getUsers);
+  app.get('/users/:username', requireAuth, getUserByName);
   app.post('/users', createUser);
+  app.post('/signup', createUser);
 };

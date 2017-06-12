@@ -6,17 +6,29 @@ const UserSchema = mongoose.Schema({
     type: String,
     unique: true,
     lowercase: true,
-    required: true,
+    trim: true,
     validate: {
       validator: (email) => {
         return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
       }
-    }
+    },
+    required: 'Please provide a valid email address.'
+  },
+  username: {
+    type: String,
+    trim: true,
+    unique: true,
+    required: true
   },
   password: {
     type: String,
+    trim: true,
     required: true
   },
+});
+
+UserSchema.on('index', function(err) {
+  console.log(err);
 });
 
 UserSchema.pre('save', function(next) {
